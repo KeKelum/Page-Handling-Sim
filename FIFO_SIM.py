@@ -71,3 +71,35 @@ def run_simulation():
         messagebox.showerror("Error", str(e))
 
 
+root = tk.Tk()
+root.title("FIFO Page Replacement Simulator")
+root.geometry("720x520")
+
+# Input frame
+frame_input = tk.Frame(root)
+frame_input.pack(pady=10)
+
+tk.Label(frame_input, text="Reference String (space-separated):").grid(row=0, column=0, sticky="w")
+entry_ref = tk.Entry(frame_input, width=40)
+entry_ref.grid(row=0, column=1, padx=10)
+
+tk.Label(frame_input, text="Number of Frames (3-5):").grid(row=1, column=0, sticky="w")
+entry_frames = tk.Entry(frame_input, width=10)
+entry_frames.grid(row=1, column=1, sticky="w")
+
+btn_run = tk.Button(root, text="Simulate", width=20, command=run_simulation)
+btn_run.pack(pady=10)
+
+# Output box with scrollbar
+frame_output = tk.Frame(root)
+frame_output.pack(fill="both", expand=True)
+
+scrollbar = tk.Scrollbar(frame_output)
+scrollbar.pack(side="right", fill="y")
+
+text_output = tk.Text(frame_output, wrap="none", yscrollcommand=scrollbar.set, state="disabled")
+text_output.pack(fill="both", expand=True)
+
+scrollbar.config(command=text_output.yview)
+
+root.mainloop()
