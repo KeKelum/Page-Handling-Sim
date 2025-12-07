@@ -47,3 +47,10 @@ def simulate_fifo(reference_string, frames_count):
     print(f"Total page faults: {page_faults}")
     return page_faults
 
+# Example usage
+if __name__ == "__main__":
+    # Example reference string
+    ref_str = [7, 0, 1, 2, 0, 3, 0, 4]
+    frames_count = 3
+    simulate_fifo(ref_str, frames_count)
+
