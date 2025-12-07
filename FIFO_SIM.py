@@ -1,3 +1,6 @@
+import tkinter as tk
+from tkinter import ttk, messagebox
+
 def validate_inputs(ref_str, frames_count):
     if len(ref_str) == 0 or len(ref_str) > 10:
         raise ValueError("Reference string must contain 1 to 10 pages.")
