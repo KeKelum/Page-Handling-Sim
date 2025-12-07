@@ -47,10 +47,27 @@ def simulate_fifo(reference_string, frames_count):
     print(f"Total page faults: {page_faults}")
     return page_faults
 
-# Example usage
-if __name__ == "__main__":
-    # Example reference string
-    ref_str = [7, 0, 1, 2, 0, 3, 0, 4]
-    frames_count = 3
-    simulate_fifo(ref_str, frames_count)
+
+def run_simulation():
+    ref_str_raw = entry_ref.get().strip()
+    frames_raw = entry_frames.get().strip()
+
+    try:
+        ref_list = list(map(int, ref_str_raw.split()))
+        frames_count = int(frames_raw)
+    except:
+        messagebox.showerror("Input Error", "Invalid number format.")
+        return
+
+    try:
+        result = simulate_fifo(ref_list, frames_count)
+
+        text_output.config(state="normal")
+        text_output.delete("1.0", tk.END)
+        text_output.insert(tk.END, result)
+        text_output.config(state="disabled")
+
+    except Exception as e:
+        messagebox.showerror("Error", str(e))
+
 
