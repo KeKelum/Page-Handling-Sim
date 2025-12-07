@@ -1,56 +1,60 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 
+
+# Validation function
+# ---------------------------------------------------------
 def validate_inputs(ref_str, frames_count):
     if len(ref_str) == 0 or len(ref_str) > 10:
         raise ValueError("Reference string must contain 1 to 10 pages.")
     if not (3 <= frames_count <= 5):
         raise ValueError("Number of frames must be between 3 and 5.")
-    return True
 
+
+
+# FIFO Simulation
+# ---------------------------------------------------------
 def simulate_fifo(reference_string, frames_count):
     validate_inputs(reference_string, frames_count)
 
     frames = []
-    next_to_replace = 0   # index in frames list
+    next_to_replace = 0
     page_faults = 0
+    output = []
 
-    print("-" * 60)
-    print(f"FIFO Simulation — frames: {frames_count}, references: {reference_string}")
-    print("-" * 60)
+    output.append("-" * 60)
+    output.append(f"FIFO Simulation — frames: {frames_count}, references: {reference_string}")
+    output.append("-" * 60)
 
     for step, page in enumerate(reference_string, start=1):
         before = frames.copy()
-        event = ""
-        replaced = None
 
         if page in frames:
-            # Hit
             event = "Hit"
         else:
-            # Page Fault
             page_faults += 1
             event = "Page Fault"
 
             if len(frames) < frames_count:
-                # Free frame exists — just add
                 frames.append(page)
                 event += " (loaded into free frame)"
             else:
-                # Replace using FIFO
                 replaced = frames[next_to_replace]
                 frames[next_to_replace] = page
                 event += f" (replaced page {replaced})"
                 next_to_replace = (next_to_replace + 1) % frames_count
 
-        print(f"Step {step:2d}: Ref page = {page:2d} | Frames before: {before} | {event}")
-        print(f"          Frames after : {frames}")
-        print("-" * 60)
+        output.append(f"Step {step:2d}: Ref = {page:2d} | Before: {before} | {event}")
+        output.append(f"          After : {frames}")
+        output.append("-" * 60)
 
-    print(f"Total page faults: {page_faults}")
-    return page_faults
+    output.append(f"Total page faults: {page_faults}")
+    return "\n".join(output)
 
 
+
+# GUI Handler
+# ---------------------------------------------------------
 def run_simulation():
     ref_str_raw = entry_ref.get().strip()
     frames_raw = entry_frames.get().strip()
@@ -74,6 +78,9 @@ def run_simulation():
         messagebox.showerror("Error", str(e))
 
 
+
+# BUILD GUI
+# ---------------------------------------------------------
 root = tk.Tk()
 root.title("FIFO Page Replacement Simulator")
 root.geometry("720x520")
@@ -93,7 +100,7 @@ entry_frames.grid(row=1, column=1, sticky="w")
 btn_run = tk.Button(root, text="Simulate", width=20, command=run_simulation)
 btn_run.pack(pady=10)
 
-# Output box with scrollbar
+# Output box with a scrollbar
 frame_output = tk.Frame(root)
 frame_output.pack(fill="both", expand=True)
 
