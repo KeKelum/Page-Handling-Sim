@@ -25,8 +25,8 @@ This project includes both:
 2. Running the GUI
 Run the main Python file:
 
-```python
-python fifo_sim.py
+```bash
+python fifoSim.py
 ```
 ## Input Format
 
