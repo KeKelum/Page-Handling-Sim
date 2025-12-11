@@ -3,6 +3,7 @@ from tkinter import ttk, messagebox
 
 
 # Validation function
+''' Ensures that user input values are validated before running the simulation '''
 # ---------------------------------------------------------
 def validate_inputs(ref_str, frames_count):
     if len(ref_str) == 0 or len(ref_str) > 10:
@@ -13,6 +14,7 @@ def validate_inputs(ref_str, frames_count):
 
 
 # FIFO Simulation
+''' Simulate FIFO page replacement algorithm '''
 # ---------------------------------------------------------
 def simulate_fifo(reference_string, frames_count):
     validate_inputs(reference_string, frames_count)
@@ -53,7 +55,12 @@ def simulate_fifo(reference_string, frames_count):
 
 
 
-# GUI Handler
+# 
+''' 
+ Connect simulate_fifo() to the GUI
+ Runs the simulation
+ Read GUI input
+ Display Output '''
 # ---------------------------------------------------------
 def run_simulation():
     ref_str_raw = entry_ref.get().strip()
@@ -80,6 +87,11 @@ def run_simulation():
 
 
 # BUILD GUI
+'''
+Input area for page reference 
+Input area for frame count
+Button for run simulation
+Output area for display final output '''
 # ---------------------------------------------------------
 root = tk.Tk()
 root.title("FIFO Page Replacement Simulator")
@@ -89,14 +101,17 @@ root.geometry("720x520")
 frame_input = tk.Frame(root)
 frame_input.pack(pady=10)
 
+# Input area for reference string
 tk.Label(frame_input, text="Reference String (space-separated):").grid(row=0, column=0, sticky="w")
 entry_ref = tk.Entry(frame_input, width=40)
 entry_ref.grid(row=0, column=1, padx=10)
 
+# Input area for frame counts
 tk.Label(frame_input, text="Number of Frames (3-5):").grid(row=1, column=0, sticky="w")
 entry_frames = tk.Entry(frame_input, width=10)
 entry_frames.grid(row=1, column=1, sticky="w")
 
+# Button for run simulation 
 btn_run = tk.Button(root, text="Simulate", width=20, command=run_simulation)
 btn_run.pack(pady=10)
 
