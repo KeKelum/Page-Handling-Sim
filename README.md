@@ -10,7 +10,7 @@ This project includes both:
 ## Features
 
 - Accepts a reference string (max 10 pages).
-- Allows selection of** 3–5 memory frames.**
+- Allows selection of **3–5 memory frames.**
 - Simulates FIFO page replacement.
 - Displays:
   - Current frame contents
